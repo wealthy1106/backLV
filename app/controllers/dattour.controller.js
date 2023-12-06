@@ -25,6 +25,20 @@ exports.mottour = (req, res, next) => {
       }
 }
 
+exports.allmot = (req, res, next) => {
+      let myquery = "select *,date_format(date_add(ngaykhoihanh,INTERVAL songay DAY ),'%d-%m-%Y')as ngayend from dattour natural join tour natural join lichtrinh natural join thanhtoan where idDT=? and idTT=?;";
+      try {
+            sql.query(myquery, [req.params.idDT, req.params.idTT], (err, result, filters) => {
+                  if (err) throw err.stack;
+                  return res.send(result);
+            })
+      } catch (error) {
+            return new ApiError(500, 'Ket noi tai khoan that bai');
+      }
+}
+
+
+
 exports.newdattour = (req, res, next) => {
       let myquery = "INSERT INTO `dulich`.`dattour` (`idT`, `idTK`, `giaL`, `giaN`, `slL`, `slN`, `trangthai`, `hotenLL`, `emailLL`, `sdtLL`, `diachiLL`, `ngaykhoihanh`, `tongcong`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?);      ";
       try {

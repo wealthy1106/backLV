@@ -52,34 +52,39 @@ exports.motid = (req, res, next) => {
 
 
 exports.new = (req, res, next) => {
-      let myquery = "INSERT INTO `dulich`.`thanhtoan` (`idDT`, `phuongthuc`, `ngaythanhtoan`, `tongcong`, `trangthai`) VALUES (?, ?, ?, ?, 'chưa xử lí');";
-      try {
-            sql.query(myquery,
-                  [
-                        req.body.idDT,
-                        req.body.phuongthuc,
-                        req.body.ngaythanhtoan,
-                        req.body.tongcong,
-                        req.body.trangthai,
-                  ],
-                  function (err, result, filters) {
-                        if (err) throw err.stack;
-                        return res.send(result);
+      let myquery = "INSERT INTO `dulich`.`thanhtoan` (`phuongthuc`, `tongcong`, `trangthai`, `idT`, `idTK`, `ngaykhoihanh`) VALUES (?, ?, 'Chưa xử lí', ?, ?, ?)";
 
+      try {
+            sql.query(
+                  myquery,
+                  [
+                        req.body.phuongthuc,
+                        req.body.tongcong,
+                        req.body.idT,  // Chắc chắn rằng giá trị này hợp lệ và tồn tại trong bảng tour
+                        req.body.idTK,
+                        req.body.ngaykhoihanh,
+                  ],
+                  function (err, result, fields) {
+                        if (err) {
+                              console.error(err);
+                              return res.status(500).send(err.message); // Trả về lỗi nếu có lỗi
+                        }
+                        return res.status(200).send(result);
                   }
-            )
+            );
       } catch (error) {
-            return new ApiError(500, 'Thất bại');
+            console.error(error);
+            return res.status(500).send('Thất bại');
       }
 }
 
+
 exports.chinhsua = (req, res, next) => {
-      let query = "UPDATE `dulich`.`thanhtoan` SET `idDT` = ?, `phuongthuc` = ?, `ngaythanhtoan` = ?, `tongcong` = ?, `trangthai` = ? WHERE (`idTT` = '1');";
+      let query = "UPDATE `dulich`.`thanhtoan` SET  `phuongthuc` = ?, `ngaythanhtoan` = ?, `tongcong` = ?, `trangthai` = ? WHERE (`idTT` = '1');";
       console.log(req.body)
       try {
             sql.query(query,
                   [
-                        req.body.idDT,
                         req.body.phuongthuc,
                         req.body.ngaythanhtoan,
                         req.body.tongcong,

@@ -11,6 +11,9 @@ router.route("/")
 router.route("/:idT")
       .post(dattour.newdattour)
 
+router.route("/:idDT/:idTT")
+      .get(dattour.allmot)
+
 router.route("/:idDT")
       .get(dattour.mottour)
       .put(dattour.chinhsua)
