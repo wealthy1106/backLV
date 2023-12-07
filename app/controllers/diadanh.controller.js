@@ -236,3 +236,27 @@ exports.tumlum = (req, res, next) => {
             return new ApiError(500, 'Ket noi tai khoan that bai');
       }
 }
+
+exports.diemden = (req, res, next) => {
+      let myquery = "select * from diadanh natural join tinhthanh group by idTinh";
+      try {
+            sql.query(myquery, (err, result, filters) => {
+                  if (err) throw err.stack;
+                  return res.send(result);
+            })
+      } catch (error) {
+            return new ApiError(500, 'Ket noi tai khoan that bai');
+      }
+}
+
+exports.diemdentheotinh = (req, res, next) => {
+      let myquery = "select * from diadanh natural join tinhthanh where idTinh=?;";
+      try {
+            sql.query(myquery, [req.params.idTinh], (err, result, filters) => {
+                  if (err) throw err.stack;
+                  return res.send(result);
+            })
+      } catch (error) {
+            return new ApiError(500, 'Ket noi tai khoan that bai');
+      }
+}

@@ -7,10 +7,12 @@ router.route("/")
       .get(diadanh.dsdiadanh)
       .post(diadanh.newdd)
 // .delete(diadanh.deleteAll);
-
+router.route("/diemden")
+      .get(diadanh.diemden)
 router.route("/tenmien")
       .get(diadanh.tenmien)
-
+router.route("/diemdentheotinh/:idTinh")
+      .post(diadanh.diemdentheotinh)
 router.route("/tinh")
       .get(diadanh.tinh)
 
@@ -43,4 +45,6 @@ router.route("/lichtrinh/:idT")
       .get(diadanh.tumlum)
 router.route("/dd")
       .post(diadanh.dsdiadanh1)
+
+
 module.exports = router;
