@@ -39,7 +39,7 @@ exports.motDD = (req, res, next) => {
 }
 
 exports.timkiemDD = (req, res, next) => {
-      let myquery = "select * from diadanh natural join tour natural join lichtrinh natural join tour_diadanh where tenDD like ?;";
+      let myquery = "select * from diadanh natural join tour natural join lichtrinh natural join tinhthanh natural join tour_diadanh where tenDD like ?;";
       try {
             sql.query(myquery, [`%${req.params.tenDD}%`], (err, result, filters) => {
                   if (err) throw err.stack;

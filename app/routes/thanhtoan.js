@@ -6,6 +6,8 @@ const router = express.Router();
 router.route("/")
       .get(thanhtoan.ds)
       .post(thanhtoan.new)
+router.route("/toanbo")
+      .post(thanhtoan.all)
 // .delete(thanhtoan.deleteAll);
 router.route("/all/:idT")
       .get(thanhtoan.dsdd)

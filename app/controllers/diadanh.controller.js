@@ -260,3 +260,38 @@ exports.diemdentheotinh = (req, res, next) => {
             return new ApiError(500, 'Ket noi tai khoan that bai');
       }
 }
+
+exports.tinhthanh = (req, res, next) => {
+      let myquery = "select * from tinhthanh where idTinh=?;";
+      try {
+            sql.query(myquery, [req.params.idTinh], (err, result, filters) => {
+                  if (err) throw err.stack;
+                  return res.send(result);
+            })
+      } catch (error) {
+            return new ApiError(500, 'Ket noi tai khoan that bai');
+      }
+}
+
+exports.tourTinh = (req, res, next) => {
+      let myquery = "select * from tour natural join diadanh natural join tinhthanh natural join tour_diadanh natural join lichtrinh where idTinh=? group by idT;";
+      try {
+            sql.query(myquery, [req.params.idTinh], (err, result, filters) => {
+                  if (err) throw err.stack;
+                  return res.send(result);
+            })
+      } catch (error) {
+            return new ApiError(500, 'Ket noi tai khoan that bai');
+      }
+}
+exports.timkiemtentinh = (req, res, next) => {
+      let myquery = "select * from diadanh natural join tinhthanh where idTinh=? group by idTinh;";
+      try {
+            sql.query(myquery, [req.params.idTinh], (err, result, filters) => {
+                  if (err) throw err.stack;
+                  return res.send(result);
+            })
+      } catch (error) {
+            return new ApiError(500, 'Ket noi tai khoan that bai');
+      }
+}

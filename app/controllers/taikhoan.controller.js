@@ -69,12 +69,13 @@ exports.login = (req, res, next) => {
 // }
 
 exports.newuser = (req, res, next) => {
-      let myquery = "INSERT INTO `dulich`.`taikhoan` (`hoten`, `diachi`, `email`,`sdt`,`matkhau`, `vaitro`) VALUES (?, ?, ?,?, ?, 'user');";
+      let myquery = "INSERT INTO `dulich`.`taikhoan` (`hoten`, `diachi`, `gioitinh`, `email`,`sdt`,`matkhau`, `vaitro`) VALUES (?, ?,?, ?,?, ?, 'user');";
       try {
             sql.query(myquery,
                   [
                         req.body.hoten,
                         req.body.diachi,
+                        req.body.gioitinh,
                         req.body.email,
                         req.body.sdt,
                         req.body.matkhau,
@@ -91,13 +92,15 @@ exports.newuser = (req, res, next) => {
 }
 
 exports.chinhsua = (req, res, next) => {
-      let query = " UPDATE `dulich`.`taikhoan` SET `hoten` = ?, `diachi` = ?, `email` = ?, `matkhau` = ? WHERE (`idTK` = ?);";
+      let query = " UPDATE `dulich`.`taikhoan` SET `hoten` = ?, `diachi` = ?, `gioitinh`=?,  `sdt`=?,`email` = ?, `matkhau` = ? WHERE (`idTK` = ?);";
       console.log(req.body)
       try {
             sql.query(query,
                   [
                         req.body.hoten,
                         req.body.diachi,
+                        req.body.gioitinh,
+                        req.body.sdt,
                         req.body.email,
                         req.body.matkhau,
                         req.params.idTK,
