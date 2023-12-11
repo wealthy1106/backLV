@@ -14,7 +14,7 @@ exports.dsdattout = (req, res, next) => {
 }
 
 exports.mottour = (req, res, next) => {
-      let myquery = "select  * from dattour where idDT=?; ";
+      let myquery = "select * from dattour natural join tour where idDT=?; ";
       try {
             sql.query(myquery, req.params.idDT, (err, result, filters) => {
                   if (err) throw err.stack;
@@ -130,4 +130,56 @@ exports.delete = async (req, res, next) => {
             return new ApiError(500, 'Không kết nối đc');
       }
 
+}
+exports.updateTrangthai = (req, res, next) => {
+      let query = "UPDATE `dulich`.`dattour` SET  `trangthai` = ? WHERE (`idDT` = ?);";
+      console.log(req.body)
+      try {
+            sql.query(query,
+                  [
+                        req.body.trangthai,
+                        req.params.idDT
+
+                  ], function (err, result, filters) {
+                        if (err) throw err.stack;
+                        return res.send('Cập nhật trạng thái thành công');
+                  })
+            console.log(query)
+      } catch (error) {
+            return new ApiError(500, 'Kết nối thất bại');
+      }
+}
+
+exports.tongtour = (req, res, next) => {
+      let myquery = "select *,count(*) as tong from tour;";
+      try {
+            sql.query(myquery, (err, result, filters) => {
+                  if (err) throw err.stack;
+                  return res.send(result);
+            })
+      } catch (error) {
+            return new ApiError(500, 'Ket noi tai khoan that bai');
+      }
+}
+exports.tongtien = (req, res, next) => {
+      let myquery = "select sum(tongcong) as tong from thanhtoan;";
+      try {
+            sql.query(myquery, (err, result, filters) => {
+                  if (err) throw err.stack;
+                  return res.send(result);
+            })
+      } catch (error) {
+            return new ApiError(500, 'Ket noi tai khoan that bai');
+      }
+}
+exports.tongluot = (req, res, next) => {
+      let myquery = "select *,count(*) as tong from dattour;";
+      try {
+            sql.query(myquery, (err, result, filters) => {
+                  if (err) throw err.stack;
+                  return res.send(result);
+            })
+      } catch (error) {
+            return new ApiError(500, 'Ket noi tai khoan that bai');
+      }
 }

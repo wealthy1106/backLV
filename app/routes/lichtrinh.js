@@ -7,6 +7,8 @@ router.route("/")
       .get(lichtrinh.dsLT)
       .post(lichtrinh.newLT)
 // .delete(lichtrinh.deleteAll);
+router.route("/tongLT")
+      .get(lichtrinh.tongLT)
 
 router.route("/:idLT")
       .get(lichtrinh.motLT)

@@ -144,9 +144,9 @@ exports.tinhMB = (req, res, next) => {
 }
 
 exports.tourtheotinh = (req, res, next) => {
-      let myquery = "select *,date_format(ngaykhoihanh,'%d/%m/%y') as dateKH  from tour_diadanh natural join lichtrinh natural join tour natural join diadanh natural join tinhthanh where tenTinh=? group by idT;";
+      let myquery = "select * from tinhthanh natural join diadanh where idTinh=?;";
       try {
-            sql.query(myquery, req.body.tentinh, (err, result, filters) => {
+            sql.query(myquery, req.body.idTinh, (err, result, filters) => {
                   if (err) throw err.stack;
                   return res.send(result);
             })
@@ -288,6 +288,52 @@ exports.timkiemtentinh = (req, res, next) => {
       let myquery = "select * from diadanh natural join tinhthanh where idTinh=? group by idTinh;";
       try {
             sql.query(myquery, [req.params.idTinh], (err, result, filters) => {
+                  if (err) throw err.stack;
+                  return res.send(result);
+            })
+      } catch (error) {
+            return new ApiError(500, 'Ket noi tai khoan that bai');
+      }
+}
+
+exports.tourtimkiem = (req, res, next) => {
+      let myquery = "select * from tinhthanh natural join diadanh natural join tour_diadanh natural join tour natural join lichtrinh where tenDD like ? group by idT;";
+      try {
+            sql.query(myquery, [`%${req.params.tenDD}%`], (err, result, filters) => {
+                  if (err) throw err.stack;
+                  return res.send(result);
+            })
+      } catch (error) {
+            return new ApiError(500, 'Ket noi tai khoan that bai');
+      }
+}
+
+exports.dsDD = (req, res, next) => {
+      let myquery = "select * from tinhthanh natural join diadanh ;";
+      try {
+            sql.query(myquery, (err, result, filters) => {
+                  if (err) throw err.stack;
+                  return res.send(result);
+            })
+      } catch (error) {
+            return new ApiError(500, 'Ket noi tai khoan that bai');
+      }
+}
+exports.tinhthanh = (req, res, next) => {
+      let myquery = "select * from tinhthanh where idTinh=?;";
+      try {
+            sql.query(myquery, req.params.idTinh, (err, result, filters) => {
+                  if (err) throw err.stack;
+                  return res.send(result);
+            })
+      } catch (error) {
+            return new ApiError(500, 'Ket noi tai khoan that bai');
+      }
+}
+exports.tongDD = (req, res, next) => {
+      let myquery = "select *,COUNT(idDD) as tong from tinhthanh natural join diadanh ;";
+      try {
+            sql.query(myquery, (err, result, filters) => {
                   if (err) throw err.stack;
                   return res.send(result);
             })

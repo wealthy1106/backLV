@@ -128,3 +128,14 @@ exports.delete = async (req, res, next) => {
       }
 
 }
+exports.dsTKUser = (req, res, next) => {
+      let myquery = "select  * from taikhoan where vaitro='user'";
+      try {
+            sql.query(myquery, (err, result, filters) => {
+                  if (err) throw err.stack;
+                  return res.send(result);
+            })
+      } catch (error) {
+            return new ApiError(500, 'Ket noi tai khoan that bai');
+      }
+}

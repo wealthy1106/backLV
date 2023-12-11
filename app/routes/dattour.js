@@ -7,9 +7,20 @@ router.route("/")
       .get(dattour.dsdattout)
 // .post(dattour.newdattour)
 // .delete(dattour.deleteAll);
+router.route("/tongtour/")
+      .get(dattour.tongtour)
+
+router.route("/tongtien/")
+      .get(dattour.tongtien)
+
+router.route("/tongluot/")
+      .get(dattour.tongluot)
 
 router.route("/:idT")
       .post(dattour.newdattour)
+
+router.route("/trangthai/:idDT")
+      .put(dattour.updateTrangthai)
 
 router.route("/:idDT/:idTT")
       .get(dattour.allmot)

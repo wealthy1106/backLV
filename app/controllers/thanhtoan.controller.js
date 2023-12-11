@@ -80,7 +80,7 @@ exports.new = (req, res, next) => {
 
 
 exports.chinhsua = (req, res, next) => {
-      let query = "UPDATE `dulich`.`thanhtoan` SET  `phuongthuc` = ?, `ngaythanhtoan` = ?, `tongcong` = ?, `trangthai` = ? WHERE (`idTT` = '1');";
+      let query = "UPDATE `dulich`.`thanhtoan` SET  `phuongthuc` = ?, `ngaythanhtoan` = ?, `tongcong` = ?, `trangthai` = ? WHERE (`idTT` = ?);";
       console.log(req.body)
       try {
             sql.query(query,
@@ -125,5 +125,21 @@ exports.all = (req, res, next) => {
             })
       } catch (error) {
             return new ApiError(500, 'Ket noi tai khoan that bai');
+      }
+}
+exports.updatephuongthuc = (req, res, next) => {
+      let query = "UPDATE `dulich`.`thanhtoan` SET  `phuongthuc` = ? WHERE (`idTT` = ?);";
+      try {
+            sql.query(query,
+                  [
+                        req.body.phuongthuc,
+                        req.params.idTT,
+                  ], function (err, result, filters) {
+                        if (err) throw err.stack;
+                        return res.send('Cập nhật trạng thái thành công');
+                  })
+            console.log(query)
+      } catch (error) {
+            return new ApiError(500, 'Kết nối thất bại');
       }
 }

@@ -2,7 +2,7 @@ const ApiError = require('../api_error');
 const sql = require('../util/mysql.util');
 
 exports.dsLT = (req, res, next) => {
-      let myquery = "select  * from lichtrinh";
+      let myquery = "select  * from lichtrinh natural join tour";
       try {
             sql.query(myquery, (err, result, filters) => {
                   if (err) throw err.stack;
@@ -14,7 +14,7 @@ exports.dsLT = (req, res, next) => {
 }
 
 exports.motLT = (req, res, next) => {
-      let myquery = "select  * from lichtrinh where idLT=?; ";
+      let myquery = "select  * from lichtrinh natural join tour where idLT=?; ";
       try {
             sql.query(myquery, req.params.idLT, (err, result, filters) => {
                   if (err) throw err.stack;
@@ -26,15 +26,12 @@ exports.motLT = (req, res, next) => {
 }
 
 exports.newLT = (req, res, next) => {
-      let myquery = "INSERT INTO `dulich`.`lichtrinh` (`tenLT`, `ngatstart`, `ngayend`, `diadiemstart`, `diadiemend`, `idT`) VALUES (?,?,?,?,?,?);";
+      let myquery = "INSERT INTO `dulich`.`lichtrinh` (`ngaykhoihanh`, `noikhoihanh`, `idT`) VALUES (?, ?, ?);      ";
       try {
             sql.query(myquery,
                   [
-                        req.body.tenLT,
-                        req.body.ngaystart,
-                        req.body.ngayend,
-                        req.body.diadiemstart,
-                        req.body.diadiemend,
+                        req.body.ngaykhoihanh,
+                        req.body.noikhoihanh,
                         req.body.idT,
                   ],
                   function (err, result, filters) {
@@ -49,16 +46,14 @@ exports.newLT = (req, res, next) => {
 }
 
 exports.chinhsua = (req, res, next) => {
-      let query = "UPDATE `dulich`.`lichtrinh` SET `tenLT` = ?, `ngatstart` = ?, `ngayend` = ?, `diadiemstart` = ?, `diadiemend` = ?, `idT` = ? WHERE (`idLT` = ?);      ";
+      let query = "UPDATE `dulich`.`lichtrinh` SET `ngaykhoihanh` = ?, `noikhoihanh` = ?, `idT` = ? WHERE (`idLT` = ?);";
       console.log(req.body)
       try {
             sql.query(query,
                   [
-                        req.body.tenLT,
-                        req.body.ngaystart,
-                        req.body.ngayend,
-                        req.body.diadiemstart,
-                        req.body.diadiemend,
+                        req.body.ngaykhoihanh,
+                        req.body.noikhoihanh,
+                        req.body.idT,
                         req.params.idLT,
                   ], function (err, result, filters) {
                         if (err) throw err.stack;
@@ -83,4 +78,15 @@ exports.delete = async (req, res, next) => {
             return new ApiError(500, 'Không kết nối đc');
       }
 
+}
+exports.tongLT = (req, res, next) => {
+      let myquery = "select *,count(*) as tong from lichtrinh natural join tour";
+      try {
+            sql.query(myquery, (err, result, filters) => {
+                  if (err) throw err.stack;
+                  return res.send(result);
+            })
+      } catch (error) {
+            return new ApiError(500, 'Ket noi tai khoan that bai');
+      }
 }
