@@ -7,6 +7,10 @@ router.route("/")
       .get(tour.dstour)
       .post(tour.newtour)
 // .delete(tour.deleteAll);
+router.route("/dstour/")
+      .get(tour.dstour4)
+router.route("/tongtour/")
+      .get(tour.tongtour)
 
 router.route("/tourNB")
       .get(tour.tourNB)
@@ -20,7 +24,7 @@ router.route("/test2")
 router.route("/:idT")
       .get(tour.mottour)
       .put(tour.chinhsua)
-// .delete(tour.delete);
+      .delete(tour.delete);
 
 // router.route("/cttour")
 //       .post(tour.cttour)

@@ -8,6 +8,9 @@ router.route("/")
       .post(khuyenmai.newKM)
 // .delete(khuyenmai.deleteAll);
 
+router.route("/tongkm/")
+      .get(khuyenmai.tongKM)
+
 router.route("/all3")
       .get(khuyenmai.all3)
 router.route("/all33")

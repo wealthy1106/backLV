@@ -7,6 +7,10 @@ router.route("/")
       .get(lehoi.dslehoi)
       .post(lehoi.newLHoi)
 // .delete(lehoi.deleteAll);
+router.route("/tongLH")
+      .get(lehoi.tongLH)
+router.route("/dslh")
+      .get(lehoi.dsLH)
 
 router.route("/:idLH")
       .get(lehoi.motLH)

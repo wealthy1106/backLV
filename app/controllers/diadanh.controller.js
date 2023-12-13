@@ -167,7 +167,7 @@ exports.alltinh = (req, res, next) => {
       }
 }
 exports.tinh = (req, res, next) => {
-      let myquery = "select * from diemdenNB natural join diadanh  natural join tour_diadanh natural join lichtrinh natural join tinhthanh limit 6 ";
+      let myquery = "select * from diemdenNB natural join diadanh  natural join tour_diadanh natural join lichtrinh natural join tinhthanh group by idT limit 6 ";
       try {
             sql.query(myquery, (err, result, filters) => {
                   if (err) throw err.stack;

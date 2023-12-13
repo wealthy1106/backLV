@@ -64,19 +64,18 @@ exports.mottour = (req, res, next) => {
 
 
 exports.newtour = (req, res, next) => {
-      let myquery = "INSERT INTO `dulich`.`tour` (`tenT`, `chitietT`, `loaiT`, `khoihanhT`, `noikhoihanh`, `giaT`, `trainghiem`, `tgian`, `idDD`) VALUES (?,?,?,?,?,?,?,?,?);";
+      let myquery = "INSERT INTO `dulich`.`tour` (`tenT`, `chitietT`, `loaiT`, `songay`, `sodem`, `giaT`, `trainghiem`, `hinhT`) VALUES (?, ?, 'Tham quan', ?, ?, ?, ?, ?');";
       try {
             sql.query(myquery,
                   [
                         req.body.tenT,
                         req.body.chitietT,
                         req.body.loaiT,
-                        req.body.khoihanhT,
-                        req.body.noikhoihanh,
+                        req.body.songay,
+                        req.body.sodem,
                         req.body.giaT,
                         req.body.trainghiem,
-                        req.body.tgian,
-                        req.body.idDD,
+                        req.body.hinhT,
                   ],
                   function (err, result, filters) {
                         if (err) throw err.stack;
@@ -90,7 +89,7 @@ exports.newtour = (req, res, next) => {
 }
 
 exports.chinhsua = (req, res, next) => {
-      let query = "UPDATE `dulich`.`tour` SET `tenT` = ?, `chitietT` = ?, `loaiT` = ?, `khoihanhT` = ?, `noikhoihanh` = ?, `giaT` = ?, `trainghiem` = ?, `tgian` = ? WHERE (`idT` = ?);";
+      let query = "UPDATE `dulich`.`tour` SET `tenT` = ?, `chitietT` = ?, `loaiT` = 'Tham quan', `songay` = ?, `sodem` = ?, `giaT` = ?, `trainghiem` = ?, `hinhT` = ? WHERE (`idT` = ?);";
       // console.log(req.body)
       try {
             sql.query(query,
@@ -98,11 +97,11 @@ exports.chinhsua = (req, res, next) => {
                         req.body.tenT,
                         req.body.chitietT,
                         req.body.loaiT,
-                        req.body.khoihanhT,
-                        req.body.noikhoihanh,
+                        req.body.songay,
+                        req.body.sodem,
                         req.body.giaT,
                         req.body.trainghiem,
-                        req.body.tgian,
+                        req.body.hinhT,
                         req.params.idT,
                   ], function (err, result, filters) {
                         if (err) throw err.stack;
@@ -114,21 +113,21 @@ exports.chinhsua = (req, res, next) => {
       }
 }
 
-// exports.delete = async (req, res, next) => {
-//       let myquery = "DELETE FROM `dulich`.`tour` WHERE (`idT` = ?);";
+exports.delete = async (req, res, next) => {
+      let myquery = "DELETE FROM `dulich`.`tour` WHERE (`idT` = ?);";
 
-//       try {
-//             sql.query(myquery,
-//                   [req.params.idT],
-//                   function (err, result, field) {
-//                         if (err) throw err.stack;
-//                         return res.json({ mes: `xóa thành công phong ${req.params.idT}` });
-//                   })
-//       } catch (error) {
-//             return new ApiError(500, 'Không kết nối đc');
-//       }
+      try {
+            sql.query(myquery,
+                  [req.params.idT],
+                  function (err, result, field) {
+                        if (err) throw err.stack;
+                        return res.json({ mes: `xóa thành công phong ${req.params.idT}` });
+                  })
+      } catch (error) {
+            return new ApiError(500, 'Không kết nối đc');
+      }
 
-// }
+}
 
 
 exports.update = (req, res, next) => {
@@ -153,5 +152,27 @@ exports.update = (req, res, next) => {
             console.log(query)
       } catch (error) {
             return new ApiError(500, 'Kết nối thất bại');
+      }
+}
+exports.dstour4 = (req, res, next) => {
+      let myquery = "select  * from tour ";
+      try {
+            sql.query(myquery, (err, result, filters) => {
+                  if (err) throw err.stack;
+                  return res.send(result);
+            })
+      } catch (error) {
+            return new ApiError(500, 'Lỗi kết nối server');
+      }
+}
+exports.tongtour = (req, res, next) => {
+      let myquery = "select  *,count(*) as tong from tour ";
+      try {
+            sql.query(myquery, (err, result, filters) => {
+                  if (err) throw err.stack;
+                  return res.send(result);
+            })
+      } catch (error) {
+            return new ApiError(500, 'Lỗi kết nối server');
       }
 }

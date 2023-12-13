@@ -2,7 +2,7 @@ const ApiError = require('../api_error');
 const sql = require('../util/mysql.util');
 
 exports.KM = (req, res, next) => {
-      let myquery = "select  * from khuyenmai ";
+      let myquery = "select  * from khuyenmai natural join tour ";
       try {
             sql.query(myquery, (err, result, filters) => {
                   if (err) throw err.stack;
@@ -74,7 +74,7 @@ exports.all63 = (req, res, next) => {
 }
 
 exports.motKM = (req, res, next) => {
-      let myquery = "select  * from khuyenmai where idKM=?; ";
+      let myquery = "select  * from khuyenmai natural join tour where idKM=?; ";
       try {
             sql.query(myquery, req.params.idKM, (err, result, filters) => {
                   if (err) throw err.stack;
@@ -107,14 +107,13 @@ exports.newKM = (req, res, next) => {
 }
 
 exports.chinhsua = (req, res, next) => {
-      let query = "UPDATE `dulich`.`khuyenmai` SET `giatruoc` = ?, `giasau` = ?, `tenKM` = ?, `idT` = ? WHERE (`idKM` = ?);"
+      let query = "UPDATE `dulich`.`khuyenmai` SET `tenKM` = ?, `phantram` = ?, `idT` = ? WHERE (`idKM` = ?);"
       console.log(req.body)
       try {
             sql.query(query,
                   [
-                        req.body.giatruoc,
-                        req.body.giasau,
                         req.body.tenKM,
+                        req.body.phantram,
                         req.body.idT,
                         req.params.idKM,
                   ], function (err, result, filters) {
@@ -140,4 +139,15 @@ exports.delete = async (req, res, next) => {
             return new ApiError(500, 'Không kết nối đc');
       }
 
+}
+exports.tongKM = (req, res, next) => {
+      let myquery = "select count(*) as tong from khuyenmai;";
+      try {
+            sql.query(myquery, (err, result, filters) => {
+                  if (err) throw err.stack;
+                  return res.send(result);
+            })
+      } catch (error) {
+            return new ApiError(500, 'Ket noi tai khoan that bai');
+      }
 }

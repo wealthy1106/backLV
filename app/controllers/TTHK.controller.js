@@ -79,24 +79,6 @@ exports.chinhsua = (req, res, next) => {
       }
 }
 
-// exports.updateAmind = (req, res, next) => {
-//       let query = "UPDATE `dulich`.`tthk` SET `trangthai` = ? WHERE (`idDT` = ?);";
-//       console.log(req.body)
-//       try {
-//             sql.query(query,
-//                   [
-//                         req.body.trangthai,
-//                         req.params.idT
-//                   ], function (err, result, filters) {
-//                         if (err) throw err.stack;
-//                         return res.send('Cập nhật trạng thái thành công');
-//                   })
-//             console.log(query)
-//       } catch (error) {
-//             return new ApiError(500, 'Kết nối thất bại');
-//       }
-// }
-
 exports.delete = async (req, res, next) => {
       let myquery = "DELETE FROM `dulich`.`tthk` WHERE (`idHK` = ?);";
 

@@ -14,7 +14,7 @@ exports.dslehoi = (req, res, next) => {
 }
 
 exports.motLH = (req, res, next) => {
-      let myquery = "select  * from lehoi where idLH=?; ";
+      let myquery = "select  * from lehoi natural join tinhthanh where idLH=?; ";
       try {
             sql.query(myquery, req.params.idLH, (err, result, filters) => {
                   if (err) throw err.stack;
@@ -60,6 +60,7 @@ exports.chinhsua = (req, res, next) => {
                         req.body.motaLH,
                         req.body.idTinh,
                         req.body.ngayLH,
+                        req.params.idLH,
 
                   ], function (err, result, filters) {
                         if (err) throw err.stack;
@@ -86,4 +87,27 @@ exports.delete = async (req, res, next) => {
             return new ApiError(500, 'Không kết nối đc');
       }
 
+}
+
+exports.tongLH = (req, res, next) => {
+      let myquery = "select *,count(*) as tong from lehoi;";
+      try {
+            sql.query(myquery, (err, result, filters) => {
+                  if (err) throw err.stack;
+                  return res.send(result);
+            })
+      } catch (error) {
+            return new ApiError(500, 'Ket noi tai khoan that bai');
+      }
+}
+exports.dsLH = (req, res, next) => {
+      let myquery = "select * from lehoi natural join tinhthanh;";
+      try {
+            sql.query(myquery, (err, result, filters) => {
+                  if (err) throw err.stack;
+                  return res.send(result);
+            })
+      } catch (error) {
+            return new ApiError(500, 'Ket noi tai khoan that bai');
+      }
 }
