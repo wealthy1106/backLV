@@ -7,6 +7,11 @@ router.route("/")
       .get(tour.dstour)
       .post(tour.newtour)
 // .delete(tour.deleteAll);
+router.route("/hanhkhach")
+      .get(tour.dshanhkhach)
+router.route("/hanhkhach/:idHK")
+      .get(tour.motHK)
+
 router.route("/dstour/")
       .get(tour.dstour4)
 router.route("/tongtour/")
@@ -14,6 +19,9 @@ router.route("/tongtour/")
 
 router.route("/tourNB")
       .get(tour.tourNB)
+router.route("/updateTNB/:idTNB")
+      .get(tour.mottourNB)
+      .put(tour.updateTNB)
 
 router.route("/test1")
       .get(tour.dstour1)

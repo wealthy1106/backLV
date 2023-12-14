@@ -12,6 +12,10 @@ router.route("/motDD/:idDD")
 router.route("/timkiemDD/:tenDD")
       .get(TDD.timkiemDD)
 
+router.route("/:idTDD")
+      .put(TDD.chinhsua)
+      .delete(TDD.delete);
+
 router.route("/:idT/idDD")
       .get(TDD.mot)
       .put(TDD.chinhsua)

@@ -64,13 +64,12 @@ exports.mottour = (req, res, next) => {
 
 
 exports.newtour = (req, res, next) => {
-      let myquery = "INSERT INTO `dulich`.`tour` (`tenT`, `chitietT`, `loaiT`, `songay`, `sodem`, `giaT`, `trainghiem`, `hinhT`) VALUES (?, ?, 'Tham quan', ?, ?, ?, ?, ?');";
+      let myquery = "INSERT INTO `dulich`.`tour` (`tenT`, `chitietT`, `loaiT`, `songay`, `sodem`, `giaT`, `trainghiem`, `hinhT`) VALUES (?, ?, 'Tham quan', ?, ?, ?, ?,?);";
       try {
             sql.query(myquery,
                   [
                         req.body.tenT,
                         req.body.chitietT,
-                        req.body.loaiT,
                         req.body.songay,
                         req.body.sodem,
                         req.body.giaT,
@@ -89,14 +88,13 @@ exports.newtour = (req, res, next) => {
 }
 
 exports.chinhsua = (req, res, next) => {
-      let query = "UPDATE `dulich`.`tour` SET `tenT` = ?, `chitietT` = ?, `loaiT` = 'Tham quan', `songay` = ?, `sodem` = ?, `giaT` = ?, `trainghiem` = ?, `hinhT` = ? WHERE (`idT` = ?);";
+      let query = "UPDATE `dulich`.`tour` SET `tenT` = ?, `chitietT` = ?, `songay` = ?, `sodem` = ?, `giaT` = ?, `trainghiem` = ?, `hinhT` = ? WHERE (`idT` = ?);      ";
       // console.log(req.body)
       try {
             sql.query(query,
                   [
                         req.body.tenT,
                         req.body.chitietT,
-                        req.body.loaiT,
                         req.body.songay,
                         req.body.sodem,
                         req.body.giaT,
@@ -174,5 +172,57 @@ exports.tongtour = (req, res, next) => {
             })
       } catch (error) {
             return new ApiError(500, 'Lỗi kết nối server');
+      }
+}
+exports.updateTNB = (req, res, next) => {
+      let query = "UPDATE `dulich`.`tournb` SET `idT` = ? WHERE (`idTNB` = ?); ";
+      // console.log(req.body)
+      try {
+            sql.query(query,
+                  [
+                        req.body.idT,
+                        req.params.idTNB,
+                  ], function (err, result, filters) {
+                        if (err) throw err.stack;
+                        return res.send('Cập nhật trạng thái thành công');
+                  })
+            console.log(query)
+      } catch (error) {
+            return new ApiError(500, 'Kết nối thất bại');
+      }
+}
+exports.mottourNB = (req, res, next) => {
+      let myquery = "select * from tournb natural join tour where idTNB=?; ";
+      try {
+            sql.query(myquery, req.params.idTNB, (err, result, filters) => {
+                  if (err) throw err.stack;
+                  return res.send(result);
+            })
+      } catch (error) {
+            return new ApiError(500, 'Ket noi tai khoan that bai');
+      }
+}
+
+exports.dshanhkhach = (req, res, next) => {
+      let myquery = "select  * from tthk natural join dattour natural join tour;";
+      try {
+            sql.query(myquery, (err, result, filters) => {
+                  if (err) throw err.stack;
+                  return res.send(result);
+            })
+      } catch (error) {
+            return new ApiError(500, 'Lỗi kết nối server');
+      }
+}
+
+exports.motHK = (req, res, next) => {
+      let myquery = "select * from tthk natural join dattour natural join tour where idHK=?;";
+      try {
+            sql.query(myquery, req.params.idHK, (err, result, filters) => {
+                  if (err) throw err.stack;
+                  return res.send(result);
+            })
+      } catch (error) {
+            return new ApiError(500, 'Ket noi tai khoan that bai');
       }
 }

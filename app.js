@@ -14,6 +14,7 @@ const thanhtoanRouter = require("./app/routes/thanhtoan.js")
 const TDDRouter = require("./app/routes/T_DD.js")
 const TTHKRouter = require("./app/routes/TTHK.js")
 const lehoiRouter = require("./app/routes/lehoi.js")
+const vetourRouter = require("./app/routes/vetour.js")
 
 
 const bodyParser = require('body-parser')
@@ -44,6 +45,7 @@ app.use("/api/thanhtoan", thanhtoanRouter);
 app.use("/api/TTHK", TTHKRouter);
 app.use("/api/TDD", TDDRouter);
 app.use("/api/lehoi", lehoiRouter);
+app.use("/api/vetour", vetourRouter);
 
 let pageViews = 0;
 

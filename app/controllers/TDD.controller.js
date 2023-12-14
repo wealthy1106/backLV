@@ -51,15 +51,12 @@ exports.timkiemDD = (req, res, next) => {
 }
 
 exports.new = (req, res, next) => {
-      let myquery = "INSERT INTO `dulich`.`Tour_diadanh` (`idT`, `idDD`, `buoisang`, `buoitrua`, `buoichieu`, `tieude`) VALUES (?, ?, ?, ?, ?, ?);";
+      let myquery = "INSERT INTO `dulich`.`tour_diadanh` (`idT`, `idDD`, `tieude`) VALUES (?, ?, ?);";
       try {
             sql.query(myquery,
                   [
                         req.body.idT,
                         req.body.idDD,
-                        req.body.buoisang,
-                        req.body.buoitrua,
-                        req.body.buoichieu,
                         req.body.tieude,
                   ],
                   function (err, result, filters) {
@@ -74,16 +71,13 @@ exports.new = (req, res, next) => {
 }
 
 exports.chinhsua = (req, res, next) => {
-      let query = "UPDATE `dulich`.`Tour_diadanh` SET `idT` = ?, `idDD` = ?, `buoisang` = ?, `buoitrua` = ?, `buoichieu` = ?, `tieude` = ? WHERE (`idTDD` = ?);";
+      let query = "UPDATE `dulich`.`tour_diadanh` SET `idT` = ?, `idDD` = ?, `tieude` = ? WHERE (`idTDD` = ?);";
       console.log(req.body)
       try {
             sql.query(query,
                   [
                         req.body.idT,
                         req.body.idDD,
-                        req.body.buoisang,
-                        req.body.buoitrua,
-                        req.body.buoichieu,
                         req.body.tieude,
                         req.params.idTDD,
                   ], function (err, result, filters) {
